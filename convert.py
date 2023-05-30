@@ -1,9 +1,15 @@
+import os
+import shutil
 from moviepy.editor import *
 
 # 입력 디렉토리의 경로 설정
-input_dir = "D:/데이터작업/1.정제/230510/오디오변환이전"
+input_dir = "D:/데이터작업/1.정제/230510/오디오변환이전/230510_001"
+
 # 출력 디렉토리의 경로 설정
-output_dir = "D:/데이터작업/1.정제/230510/오디오변환이후"
+output_dir = "D:/데이터작업/1.정제/230510/오디오변환이후/230510_001"
+
+# 아카이브 디렉토리의 경로 설정
+archive_dir = "D:/데이터작업/1.정제/230510/오디오변환이후/230510_001"
 
 # 입력 디렉토리의 각 파일을 반복합니다.
 for filename in os.listdir(input_dir):
@@ -21,6 +27,9 @@ for filename in os.listdir(input_dir):
         audio = video.audio
         audio.write_audiofile(output_file, codec="aac", bitrate="192k")
         
-        # Close the video and audio clips
+        # 비디오 및 오디오 클립 닫기
         video.close()
         audio.close()
+        
+        # 입력 파일을 아카이브 디렉토리에 복사
+        shutil.copy(input_file, os.path.join(archive_dir, filename))
